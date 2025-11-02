@@ -1,0 +1,30 @@
+//Heaters
+
+class Solution {
+public:
+    int findRadius(vector<int>& houses, vector<int>& heaters) {
+        sort(houses.begin(), houses.end());
+        sort(heaters.begin(), heaters.end());
+        int res = 0;
+
+        for (int i = 0; i < houses.size(); i++) {
+            int pos = lower_bound(heaters.begin(), heaters.end(), houses[i]) - heaters.begin();
+            
+            int leftdist = INT_MAX;
+            int rightdist = INT_MAX;
+
+            if (pos > 0) {
+                leftdist = houses[i] - heaters[pos - 1];
+            }
+
+            if (pos < heaters.size()) {
+                rightdist = heaters[pos] - houses[i];
+            }
+
+            int curr = min(leftdist, rightdist);
+            res = max(res, curr);
+        }
+
+        return res;
+    }
+};
